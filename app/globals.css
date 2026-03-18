@@ -1,8 +1,13 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+}
+
 @theme {
-  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
-  --color-primary: #FF6B6B;
+  --font-sans: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --font-heading: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #0B60B0;
   --color-text-main: #181725;
   --color-text-muted: #7C7C7C;
   --color-bg-light: #F7F7F7;
@@ -10,4 +15,8 @@
   --color-cat-comida: #B71C1C;
   --color-cat-servicos: #9C27B0;
   --color-cat-farmacia: #2196F3;
+}
+
+@utility font-heading {
+  font-family: var(--font-heading);
 }
