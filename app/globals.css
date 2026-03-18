@@ -1,0 +1,13 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --color-primary: #FF6B6B;
+  --color-text-main: #181725;
+  --color-text-muted: #7C7C7C;
+  --color-bg-light: #F7F7F7;
+  --color-cat-mercado: #4CAF50;
+  --color-cat-comida: #B71C1C;
+  --color-cat-servicos: #9C27B0;
+  --color-cat-farmacia: #2196F3;
+}
