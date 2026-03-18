@@ -1,91 +1,148 @@
 'use client';
 
-import { ShoppingBag, Utensils, Wrench, Play, Heart, TrendingUp, Star, Users, Check, Rocket } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { ShoppingBag, Utensils, Wrench, Play, Heart, TrendingUp, Star, Users, Check, Rocket, Menu, X } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 
 export default function Home() {
+  const [drawerOpen, setDrawerOpen] = useState(false);
+
+  const closeDrawer = () => setDrawerOpen(false);
+
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? 'hidden' : '';
+    return () => { document.body.style.overflow = ''; };
+  }, [drawerOpen]);
+
+  const navLinks = [
+    { href: '#features', label: 'Vantagens' },
+    { href: '#planos', label: 'Planos' },
+    { href: '#apoie', label: 'Apoie' },
+  ];
+
   return (
     <div className="min-h-screen bg-white text-text-main flex flex-col font-sans">
-      {/* Header */}
       <header className="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
-          <div className="flex items-center gap-12">
-            <Link href="/" className="text-2xl font-heading font-black text-primary tracking-tighter">
-              SMART STOCK
-            </Link>
-            <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-muted uppercase tracking-wider">
-              <a href="#features" className="hover:text-primary transition-colors">Vantagens</a>
-              <a href="#planos" className="hover:text-primary transition-colors">Planos</a>
-              <a href="#apoie" className="hover:text-primary transition-colors">Apoie</a>
-            </nav>
-          </div>
-          <div className="flex items-center gap-4">
-            <button className="text-text-main font-bold px-4 py-2 hover:text-primary transition-colors">
-              Entrar
-            </button>
-            <button className="bg-primary text-white font-bold px-6 py-2.5 rounded-full hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95">
-              Começar agora
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 md:h-20 flex items-center justify-between">
+          <Link href="/" className="text-xl md:text-2xl font-heading font-black text-primary tracking-tighter">
+            SMART STOCK
+          </Link>
+          <nav className="hidden md:flex items-center gap-8 text-sm font-semibold text-text-muted uppercase tracking-wider">
+            {navLinks.map(({ href, label }) => (
+              <a key={href} href={href} className="hover:text-primary transition-colors">{label}</a>
+            ))}
+          </nav>
+          <div className="flex items-center gap-2 md:gap-4">
+            <div className="hidden md:flex gap-4">
+              <button className="text-text-main font-bold px-4 py-2 hover:text-primary transition-colors">Entrar</button>
+              <button className="bg-primary text-white font-bold px-6 py-2.5 rounded-full hover:bg-primary/90 transition-all shadow-md hover:shadow-lg active:scale-95">Começar agora</button>
+            </div>
+            <button
+              onClick={() => setDrawerOpen(true)}
+              className="md:hidden p-2 -mr-2 text-text-main hover:text-primary transition-colors"
+              aria-label="Abrir menu"
+            >
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
       </header>
 
+      <AnimatePresence>
+        {drawerOpen && (
+          <>
+            <motion.div
+              key="drawer-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={closeDrawer}
+              className="fixed inset-0 z-[60] bg-black/20 backdrop-blur-sm md:hidden"
+            />
+            <motion.aside
+              key="drawer"
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'tween', duration: 0.25 }}
+              className="fixed top-0 right-0 z-[70] w-full max-w-sm h-full bg-white shadow-2xl md:hidden"
+            >
+              <div className="flex flex-col h-full pt-16 pb-8 px-6">
+                <button onClick={closeDrawer} className="absolute top-4 right-4 p-2 text-text-muted hover:text-text-main" aria-label="Fechar menu">
+                  <X className="w-6 h-6" />
+                </button>
+                <nav className="flex flex-col gap-6 text-lg font-semibold">
+                  {navLinks.map(({ href, label }) => (
+                    <a key={href} href={href} onClick={closeDrawer} className="text-text-main hover:text-primary transition-colors py-2 border-b border-gray-100">
+                      {label}
+                    </a>
+                  ))}
+                </nav>
+                <div className="mt-8 flex flex-col gap-3">
+                  <button className="text-text-main font-bold py-3 hover:text-primary transition-colors text-left">Entrar</button>
+                  <button className="bg-primary text-white font-bold py-4 rounded-2xl hover:bg-primary/90 transition-all">Começar agora</button>
+                </div>
+              </div>
+            </motion.aside>
+          </>
+        )}
+      </AnimatePresence>
+
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="min-h-[calc(100vh-5rem)] flex items-center bg-bg-light px-4 sm:px-6 lg:px-8 overflow-hidden relative">
-          {/* Background Decorative Element */}
+        <section className="py-12 md:py-0 md:min-h-[calc(100vh-5rem)] flex items-center bg-bg-light px-4 sm:px-6 lg:px-8 overflow-hidden relative">
           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-[radial-gradient(circle,rgba(11,96,176,0.05)_0%,transparent_70%)] pointer-events-none"></div>
           
-          <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-12 items-center relative z-10">
+          <div className="max-w-7xl mx-auto w-full grid lg:grid-cols-2 gap-8 md:gap-12 items-center relative z-10">
             <motion.div 
               initial={{ opacity: 0, x: -30 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.6, ease: "easeOut" }}
+              className="order-2 lg:order-1 text-center lg:text-left"
             >
-              <span className="inline-flex items-center gap-2 py-1.5 px-4 rounded-full bg-primary/10 text-primary text-sm font-bold mb-6 tracking-wide uppercase">
-                <Rocket className="w-4 h-4" />
+              <span className="inline-flex items-center gap-2 py-2 px-3 sm:px-4 rounded-full bg-primary/10 text-primary text-xs sm:text-sm font-bold mb-4 md:mb-6 tracking-wide uppercase">
+                <Rocket className="w-3.5 h-3.5 sm:w-4 sm:h-4 flex-shrink-0" />
                 O Comércio de Aquiraz em um só lugar
               </span>
-              <h1 className="text-5xl md:text-6xl lg:text-7xl font-heading font-black tracking-tighter text-text-main mb-8 leading-[1.1]">
+              <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-heading font-black tracking-tighter text-text-main mb-8 leading-[1.1]">
                 Tudo do nosso bairro, <br />
                 <span className="text-primary italic">direto para você.</span>
               </h1>
-              <p className="text-xl text-text-muted mb-10 max-w-xl leading-relaxed">
+              <p className="text-base sm:text-lg md:text-xl text-text-muted mb-8 md:mb-10 max-w-xl mx-auto lg:mx-0 leading-relaxed">
                 A plataforma que conecta moradores e comerciantes do Smart City Aquiraz. Compre local, fortaleça nossa economia e economize tempo.
               </p>
 
-              <div className="flex flex-col sm:flex-row gap-4 mb-12">
+              <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 mb-8 md:mb-12 justify-center lg:justify-start">
                 <a 
                   href="https://wa.me/5585991105577" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-3 bg-[#25D366] text-white px-8 py-4 rounded-2xl font-black text-lg hover:bg-[#20bd5a] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95"
+                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-black text-base sm:text-lg hover:bg-[#20bd5a] transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95"
                 >
                   Fale no WhatsApp
                 </a>
                 <a 
                   href="#planos"
-                  className="inline-flex items-center justify-center gap-2 bg-white text-text-main border-2 border-gray-100 px-8 py-4 rounded-2xl font-black text-lg hover:bg-gray-50 transition-all hover:border-primary/20 shadow-sm"
+                  className="inline-flex items-center justify-center gap-2 bg-white text-text-main border-2 border-gray-100 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-black text-base sm:text-lg hover:bg-gray-50 transition-all hover:border-primary/20 shadow-sm"
                 >
                   Ver Planos
                 </a>
               </div>
 
-              {/* Category Quick Links */}
-              <div className="flex flex-wrap gap-4">
-                <div className="flex items-center gap-2 py-2 px-4 bg-white rounded-full shadow-sm border border-gray-100">
-                  <ShoppingBag className="w-4 h-4 text-cat-mercado" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">Mercados</span>
+              <div className="flex flex-wrap gap-2 sm:gap-4 justify-center lg:justify-start">
+                <div className="flex items-center gap-2 py-2 px-3 sm:px-4 bg-white rounded-full shadow-sm border border-gray-100">
+                  <ShoppingBag className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cat-mercado" />
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-text-muted">Mercados</span>
                 </div>
-                <div className="flex items-center gap-2 py-2 px-4 bg-white rounded-full shadow-sm border border-gray-100">
-                  <Utensils className="w-4 h-4 text-cat-comida" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">Restaurantes</span>
+                <div className="flex items-center gap-2 py-2 px-3 sm:px-4 bg-white rounded-full shadow-sm border border-gray-100">
+                  <Utensils className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cat-comida" />
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-text-muted">Restaurantes</span>
                 </div>
-                <div className="flex items-center gap-2 py-2 px-4 bg-white rounded-full shadow-sm border border-gray-100">
-                  <Wrench className="w-4 h-4 text-cat-servicos" />
-                  <span className="text-xs font-bold uppercase tracking-wider text-text-muted">Serviços</span>
+                <div className="flex items-center gap-2 py-2 px-3 sm:px-4 bg-white rounded-full shadow-sm border border-gray-100">
+                  <Wrench className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-cat-servicos" />
+                  <span className="text-[10px] sm:text-xs font-bold uppercase tracking-wider text-text-muted">Serviços</span>
                 </div>
               </div>
             </motion.div>
@@ -94,36 +151,36 @@ export default function Home() {
               initial={{ opacity: 0, scale: 0.9, rotate: 2 }}
               animate={{ opacity: 1, scale: 1, rotate: 0 }}
               transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
-              className="relative aspect-square w-full max-w-[600px] mx-auto lg:ml-auto"
+              className="relative aspect-square w-full max-w-[220px] sm:max-w-[280px] md:max-w-[380px] lg:max-w-[500px] mx-auto lg:ml-auto order-1 lg:order-2"
             >
               <Image 
                 src="/hero-smartstock-landing.svg" 
                 alt="Smart Stock Illustration" 
                 fill
                 priority
+                sizes="(max-width: 640px) 220px, (max-width: 768px) 280px, (max-width: 1024px) 380px, 500px"
                 className="object-contain"
               />
-              {/* Decorative circles */}
-              <div className="absolute -top-10 -right-10 w-32 h-32 bg-primary/10 rounded-full blur-2xl animate-pulse"></div>
-              <div className="absolute -bottom-10 -left-10 w-40 h-40 bg-cat-mercado/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+              <div className="absolute -top-6 -right-6 sm:-top-10 sm:-right-10 w-20 h-20 sm:w-32 sm:h-32 bg-primary/10 rounded-full blur-2xl animate-pulse pointer-events-none"></div>
+              <div className="absolute -bottom-6 -left-6 sm:-bottom-10 sm:-left-10 w-24 h-24 sm:w-40 sm:h-40 bg-cat-mercado/10 rounded-full blur-3xl animate-pulse pointer-events-none" style={{ animationDelay: '1s' }}></div>
             </motion.div>
           </div>
         </section>
 
         {/* Features Section */}
         <section 
-          className="min-h-[calc(100vh-5rem)] flex items-center py-24 px-4 sm:px-6 lg:px-8 bg-white scroll-mt-20" 
+          className="flex items-center py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-white scroll-mt-20" 
           id="features"
         >
           <div className="max-w-7xl mx-auto w-full">
-            <div className="text-center mb-20">
+            <div className="text-center mb-12 md:mb-20">
               <span className="text-primary font-black uppercase tracking-[0.2em] text-sm mb-4 inline-block">Vantagens</span>
-              <h2 className="text-4xl md:text-5xl font-heading font-black text-text-main tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-text-main tracking-tighter">
                 Por que usar a Smart Stock?
               </h2>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8">
               <FeatureCard 
                 icon={<Users className="w-10 h-10 text-primary" />}
                 title="Para Você"
@@ -148,31 +205,31 @@ export default function Home() {
 
         {/* Plans Section */}
         <section 
-          className="min-h-[calc(100vh-5rem)] flex items-center py-24 px-4 sm:px-6 lg:px-8 bg-bg-light scroll-mt-20" 
+          className="flex items-center py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-bg-light scroll-mt-20" 
           id="planos"
         >
           <div className="max-w-7xl mx-auto w-full">
-            <div className="text-center mb-16">
+            <div className="text-center mb-10 md:mb-16">
               <span className="text-primary font-black uppercase tracking-[0.2em] text-sm mb-4 inline-block">Investimento</span>
-              <h2 className="text-4xl md:text-5xl font-heading font-black text-text-main tracking-tighter mb-6">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-black text-text-main tracking-tighter mb-4 md:mb-6">
                 Planos de Assinatura
               </h2>
-              <p className="text-lg text-text-muted max-w-2xl mx-auto font-medium">
+              <p className="text-base sm:text-lg text-text-muted max-w-2xl mx-auto font-medium">
                 Temos a solução ideal para você, desde o prestador de serviço autônomo até o restaurante mais bombado da cidade.
               </p>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 items-stretch">
+            <div className="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
               {/* Plano Vitrine */}
-              <div className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-heading font-black text-text-main mb-3">Plano Vitrine</h3>
+              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+                <div className="mb-6 md:mb-8">
+                  <h3 className="text-xl md:text-2xl font-heading font-black text-text-main mb-2 md:mb-3">Plano Vitrine</h3>
                   <p className="text-sm text-text-muted font-bold h-10">Para prestadores de serviço e MEI (Diaristas, eletricistas, etc.)</p>
                 </div>
                 <div className="mb-8">
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm font-black text-text-muted uppercase tracking-wider">R$</span>
-                    <span className="text-5xl font-black text-text-main tracking-tighter">19,90</span>
+                    <span className="text-4xl md:text-5xl font-black text-text-main tracking-tighter">19,90</span>
                     <span className="text-lg font-bold text-text-muted">/mês</span>
                   </div>
                 </div>
@@ -192,19 +249,19 @@ export default function Home() {
               </div>
 
               {/* Plano Empreendedor */}
-              <div className="bg-primary rounded-[2.5rem] p-10 shadow-2xl shadow-primary/30 text-white flex flex-col transform md:-translate-y-6 relative border-4 border-white overflow-hidden group">
+              <div className="bg-primary rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-2xl shadow-primary/30 text-white flex flex-col transform md:-translate-y-6 relative border-4 border-white overflow-hidden group">
                 <div className="absolute -top-10 -right-10 w-40 h-40 bg-white opacity-10 rounded-full blur-2xl group-hover:scale-125 transition-transform duration-700"></div>
                 <div className="absolute top-6 right-6 bg-white text-primary px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest shadow-lg">
                   Popular
                 </div>
-                <div className="mb-8 relative z-10">
-                  <h3 className="text-2xl font-heading font-black mb-3">Empreendedor</h3>
+                <div className="mb-6 md:mb-8 relative z-10">
+                  <h3 className="text-xl md:text-2xl font-heading font-black mb-2 md:mb-3">Empreendedor</h3>
                   <p className="text-white/80 text-sm font-bold h-10">Para pequenos comércios e docerias caseiras</p>
                 </div>
                 <div className="mb-8 relative z-10">
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm font-black text-white/70 uppercase tracking-wider">R$</span>
-                    <span className="text-6xl font-black tracking-tighter">49,90</span>
+                    <span className="text-5xl md:text-6xl font-black tracking-tighter">49,90</span>
                     <span className="text-lg font-bold text-white/70">/mês</span>
                   </div>
                 </div>
@@ -225,15 +282,15 @@ export default function Home() {
               </div>
 
               {/* Plano Delivery PRO */}
-              <div className="bg-white rounded-[2.5rem] p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
-                <div className="mb-8">
-                  <h3 className="text-2xl font-heading font-black text-text-main mb-3">Delivery PRO</h3>
+              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
+                <div className="mb-6 md:mb-8">
+                  <h3 className="text-xl md:text-2xl font-heading font-black text-text-main mb-2 md:mb-3">Delivery PRO</h3>
                   <p className="text-sm text-text-muted font-bold h-10">Para Restaurantes e Comércios Estabelecidos</p>
                 </div>
                 <div className="mb-8">
                   <div className="flex items-baseline gap-1">
                     <span className="text-sm font-black text-text-muted uppercase tracking-wider">R$</span>
-                    <span className="text-5xl font-black text-text-main tracking-tighter">129,90</span>
+                    <span className="text-4xl md:text-5xl font-black text-text-main tracking-tighter">129,90</span>
                     <span className="text-lg font-bold text-text-muted">/mês</span>
                   </div>
                 </div>
@@ -258,21 +315,21 @@ export default function Home() {
         </section>
 
         {/* App Banner Section */}
-        <section className="min-h-[calc(100vh-5rem)] flex items-center py-20 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
-          <div className="max-w-6xl mx-auto w-full bg-text-main rounded-[3rem] p-8 md:p-20 flex flex-col md:flex-row items-center justify-between text-white shadow-[0_40px_100px_-20px_rgba(24,23,37,0.4)] relative overflow-hidden">
+        <section className="flex items-center py-12 md:py-20 px-4 sm:px-6 lg:px-8 bg-white overflow-hidden">
+          <div className="max-w-6xl mx-auto w-full bg-text-main rounded-2xl md:rounded-[3rem] p-6 sm:p-8 md:p-20 flex flex-col md:flex-row items-center justify-between text-white shadow-[0_40px_100px_-20px_rgba(24,23,37,0.4)] relative overflow-hidden">
             {/* Abstract Background Shapes */}
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[100px] -mr-64 -mt-64"></div>
             <div className="absolute bottom-0 left-0 w-[300px] h-[300px] bg-blue-500/10 rounded-full blur-[80px] -ml-32 -mb-32"></div>
             
-            <div className="md:w-1/2 mb-16 md:mb-0 relative z-10 text-center md:text-left">
+            <div className="md:w-1/2 mb-8 md:mb-0 relative z-10 text-center md:text-left">
               <span className="inline-block py-1.5 px-4 rounded-full bg-white/10 text-white text-sm font-black mb-6 tracking-widest uppercase backdrop-blur-sm border border-white/10">
                 Versão Beta 1.0
               </span>
-              <h2 className="text-4xl md:text-6xl font-heading font-black mb-8 leading-tight tracking-tighter">
+              <h2 className="text-3xl sm:text-4xl md:text-6xl font-heading font-black mb-6 md:mb-8 leading-tight tracking-tighter">
                 Estamos crescendo <br className="hidden lg:block" />
                 <span className="text-primary italic">com você.</span>
               </h2>
-              <p className="text-white/60 text-xl mb-12 max-w-lg leading-relaxed font-medium">
+              <p className="text-white/60 text-base sm:text-lg md:text-xl mb-8 md:mb-12 max-w-lg leading-relaxed font-medium">
                 Nossa primeira versão já está disponível. Baixe agora e faça parte da revolução do comércio local em Aquiraz.
               </p>
               <div className="flex flex-col sm:flex-row justify-center md:justify-start gap-6">
@@ -288,9 +345,8 @@ export default function Home() {
             
             <div className="md:w-5/12 relative z-10 flex justify-center">
               <div className="relative">
-                {/* Main Phone Mockup */}
-                <div className="w-64 h-[520px] bg-gray-800 rounded-[3rem] p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-[8px] border-gray-900 relative z-20 overflow-hidden transform hover:scale-105 transition-transform duration-700">
-                  <div className="w-full h-full bg-white rounded-[2.2rem] overflow-hidden relative">
+                <div className="w-48 h-[400px] sm:w-56 sm:h-[460px] md:w-64 md:h-[520px] bg-gray-800 rounded-[2rem] sm:rounded-[2.5rem] md:rounded-[3rem] p-2 sm:p-3 shadow-[0_50px_100px_-20px_rgba(0,0,0,0.5)] border-[6px] sm:border-[8px] border-gray-900 relative z-20 overflow-hidden transform hover:scale-105 transition-transform duration-700">
+                  <div className="w-full h-full bg-white rounded-[1.6rem] sm:rounded-[2rem] md:rounded-[2.2rem] overflow-hidden relative">
                     <div className="bg-primary h-32 w-full flex items-center justify-center">
                       <div className="text-white font-heading font-black text-xl tracking-tighter">SMART STOCK</div>
                     </div>
@@ -304,8 +360,7 @@ export default function Home() {
                     </div>
                   </div>
                 </div>
-                {/* Floating Elements */}
-                <div className="absolute -right-12 top-1/4 w-32 h-16 bg-white rounded-2xl shadow-2xl z-30 p-3 animate-bounce" style={{ animationDuration: '3s' }}>
+                <div className="absolute -right-4 sm:-right-8 md:-right-12 top-1/4 w-24 h-14 sm:w-32 sm:h-16 bg-white rounded-xl sm:rounded-2xl shadow-2xl z-30 p-2 sm:p-3 animate-bounce hidden sm:block" style={{ animationDuration: '3s' }}>
                   <div className="flex items-center gap-2">
                     <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600">
                       <Check className="w-4 h-4" />
@@ -323,7 +378,7 @@ export default function Home() {
 
         {/* Support Section */}
         <section 
-          className="min-h-[calc(100vh-5rem)] flex items-center py-24 px-4 sm:px-6 lg:px-8 bg-bg-light scroll-mt-20" 
+          className="flex items-center py-16 md:py-24 px-4 sm:px-6 lg:px-8 bg-bg-light scroll-mt-20" 
           id="apoie"
         >
           <div className="max-w-4xl mx-auto w-full text-center">
@@ -331,21 +386,21 @@ export default function Home() {
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="bg-white rounded-[3rem] p-12 md:p-20 shadow-2xl shadow-gray-200 border border-gray-100"
+              className="bg-white rounded-2xl md:rounded-[3rem] p-6 md:p-12 lg:p-20 shadow-2xl shadow-gray-200 border border-gray-100"
             >
-              <div className="inline-flex items-center justify-center w-24 h-24 rounded-full bg-red-50 text-primary mb-10 shadow-inner">
-                <Heart className="w-12 h-12 fill-current" />
+              <div className="inline-flex items-center justify-center w-20 h-20 md:w-24 md:h-24 rounded-full bg-red-50 text-primary mb-8 md:mb-10 shadow-inner">
+                <Heart className="w-10 h-10 md:w-12 md:h-12 fill-current" />
               </div>
-              <h2 className="text-4xl md:text-5xl font-heading font-black mb-8 text-text-main tracking-tighter">Apoie o Projeto</h2>
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-black mb-6 md:mb-8 text-text-main tracking-tighter">Apoie o Projeto</h2>
               <p className="text-xl text-text-muted mb-12 leading-relaxed font-medium">
                 O Smart Stock é uma iniciativa feita <span className="text-text-main font-bold">de morador para morador</span>. 
                 Para mantermos a plataforma com 0% de taxa e continuarmos evoluindo, aceitamos doações voluntárias.
               </p>
               
-              <div className="bg-bg-light p-10 rounded-[2rem] border-2 border-dashed border-gray-200 inline-block w-full max-w-xl mb-12 group hover:border-primary/30 transition-colors">
+              <div className="bg-bg-light p-6 md:p-10 rounded-xl md:rounded-[2rem] border-2 border-dashed border-gray-200 inline-block w-full max-w-xl mb-8 md:mb-12 group hover:border-primary/30 transition-colors">
                 <p className="text-xs font-black text-text-muted mb-4 uppercase tracking-[0.2em]">Chave PIX (E-mail)</p>
                 <div className="flex flex-col items-center gap-4">
-                  <code className="text-2xl md:text-3xl font-black text-primary select-all break-all tracking-tighter">
+                  <code className="text-lg sm:text-2xl md:text-3xl font-black text-primary select-all break-all tracking-tighter">
                     main.smartstock@gmail.com
                   </code>
                 </div>
@@ -368,10 +423,10 @@ export default function Home() {
       </main>
 
       {/* Footer */}
-      <footer className="bg-white border-t border-gray-100 py-16 px-4 sm:px-6 lg:px-8">
+      <footer className="bg-white border-t border-gray-100 py-12 md:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-10">
-            <div className="text-3xl font-heading font-black text-primary tracking-tighter">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-8 md:gap-10">
+            <div className="text-2xl md:text-3xl font-heading font-black text-primary tracking-tighter">
               SMART STOCK
             </div>
             <div className="flex flex-wrap justify-center gap-10 text-sm font-black text-text-muted uppercase tracking-widest">
@@ -394,11 +449,11 @@ export default function Home() {
 
 function FeatureCard({ icon, title, description, color }: { icon: React.ReactNode, title: string, description: string, color: string }) {
   return (
-    <div className={`p-10 rounded-[2.5rem] ${color} transition-all duration-500 hover:shadow-2xl hover:shadow-gray-100 hover:-translate-y-2 group border border-transparent hover:border-white`}>
-      <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500 group-hover:shadow-lg">
+    <div className={`p-6 md:p-10 rounded-2xl md:rounded-[2.5rem] ${color} transition-all duration-500 hover:shadow-2xl hover:shadow-gray-100 hover:-translate-y-2 group border border-transparent hover:border-white`}>
+      <div className="w-16 h-16 md:w-20 md:h-20 bg-white rounded-xl md:rounded-2xl flex items-center justify-center mb-6 md:mb-8 shadow-sm group-hover:scale-110 transition-transform duration-500 group-hover:shadow-lg">
         {icon}
       </div>
-      <h3 className="text-2xl font-heading font-black mb-4 text-text-main tracking-tight">{title}</h3>
+      <h3 className="text-xl md:text-2xl font-heading font-black mb-3 md:mb-4 text-text-main tracking-tight">{title}</h3>
       <p className="text-text-muted font-medium leading-relaxed">
         {description}
       </p>
