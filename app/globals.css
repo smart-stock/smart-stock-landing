@@ -10,7 +10,7 @@ html {
   --color-primary: #0B60B0;
   --color-text-main: #181725;
   --color-text-muted: #7C7C7C;
-  --color-bg-light: #F7F7F7;
+  --color-bg-light: #F0F8FF; /* AliceBlue for a more vibrant look instead of gray */
   --color-cat-mercado: #4CAF50;
   --color-cat-comida: #B71C1C;
   --color-cat-servicos: #9C27B0;

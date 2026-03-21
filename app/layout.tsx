@@ -1,4 +1,4 @@
-import type {Metadata} from 'next';
+import type { Metadata } from 'next';
 import { Montserrat, Poppins } from 'next/font/google';
 import './globals.css';
 
@@ -14,13 +14,16 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'Smart Stock | Tudo do nosso bairro',
-  description: 'Compre de quem tá perto, apoie Aquiraz e economize. Sem taxas escondidas.',
+  title: 'Tudo Aqui',
+  description: 'Tudo de melhor em um só lugar. Compre de quem tá perto, apoie Aquiraz e economize. Sem taxas escondidas.',
 };
 
-export default function RootLayout({children}: {children: React.ReactNode}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="pt-BR">
+      <head>
+        <link rel="icon" href="/favicon.svg" />
+      </head>
       <body className={`${montserrat.variable} ${poppins.variable} font-sans antialiased`} suppressHydrationWarning>
         {children}
       </body>
