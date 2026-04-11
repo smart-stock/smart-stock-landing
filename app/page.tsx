@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { ShoppingBag, Utensils, Wrench, Play, Heart, TrendingUp, Star, Users, Check, Rocket, Menu, X } from 'lucide-react';
+import { ShoppingBag, Utensils, Wrench, Play, Heart, TrendingUp, Star, Users, Check, Rocket, Menu, X, Shield } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'motion/react';
@@ -114,7 +114,6 @@ export default function Home() {
               <div className="flex flex-col sm:flex-col gap-3 sm:gap-4 mb-8 md:mb-12 justify-center lg:justify-start">
                 <a
                   href="#planos"
-                  // className="inline-flex items-center justify-center gap-2 bg-white text-text-main border-2 border-gray-100 px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:bg-gray-50 transition-all hover:border-primary/20 shadow-sm"
                   className="inline-flex items-center justify-center gap-2 bg-primary text-white px-6 py-3.5 sm:px-8 sm:py-4 rounded-2xl font-bold text-base sm:text-lg hover:opacity-90 transition-all shadow-xl hover:shadow-2xl hover:-translate-y-1 active:scale-95"
                 >
                   Ver planos para seu negócio
@@ -201,19 +200,26 @@ export default function Home() {
           <div className="max-w-7xl mx-auto w-full">
             <div className="text-center mb-10 md:mb-16">
               <span className="text-primary font-bold uppercase tracking-[0.2em] text-sm mb-4 inline-block">Investimento</span>
-              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-text-main tracking-tighter mb-2 md:mb-3">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-heading font-bold text-text-main tracking-tighter mb-4 md:mb-6">
                 Planos de Assinatura
               </h2>
-              <p className="text-base sm:text-lg text-text-muted max-w-2xl mx-auto font-medium">
-                Temos a solução ideal para você, desde o prestador de serviço autônomo até o restaurante mais bombado da cidade.
+              <p className="text-base sm:text-lg text-text-muted max-w-2xl mx-auto font-medium mb-8">
+                Experimente qualquer plano por 7 dias grátis. Cancele quando quiser, sem fidelidade.
               </p>
+              <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-50 text-green-700 rounded-full text-xs font-black uppercase tracking-widest border border-green-100">
+                <Shield className="w-4 h-4" />
+                Sem taxas por pedido • Cancele a qualquer momento
+              </div>
             </div>
 
             <div className="grid md:grid-cols-3 gap-6 md:gap-8 items-stretch">
               {/* Plano Vitrine */}
-              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
-                <div className="mb-6 md:mb-8">
-                  <h3 className="text-xl md:text-2xl font-heading font-bold text-text-main mb-2 md:mb-3">Plano Vitrine</h3>
+              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden">
+                <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10">
+                  7 DIAS GRÁTIS
+                </div>
+                <div className="mb-6 md:mb-8 mt-4">
+                  <h3 className="text-xl md:text-2xl font-heading font-bold text-text-main mb-2 md:mb-3">Vitrine Digital</h3>
                   <p className="text-sm text-text-muted font-bold h-10">Para prestadores de serviço (Pedreiro, eletricistas, etc.)</p>
                 </div>
                 <div className="mb-8">
@@ -224,21 +230,18 @@ export default function Home() {
                   </div>
                 </div>
                 <ul className="space-y-5 mb-10 flex-grow">
-                  <PlanFeature text="Perfil no aplicativo com foto/logo" />
-                  <PlanFeature text="Descrição detalhada dos serviços" />
-                  <PlanFeature text="Botão direto para o seu WhatsApp" />
+                  <PlanFeature text="Sua Vitrine Digital no app" />
+                  <PlanFeature text="Até 5 fotos do seu serviço" />
+                  <PlanFeature text="Botão direto para seu WhatsApp" />
+                  <PlanFeature text="Sem taxas e sem pedidos no app" />
                 </ul>
-                <div className="p-5 rounded-2xl mb-8">
-                  {/* <p className="text-md text-blue-800 font-medium leading-tight">
-                    &quot;Mais barato que rodar panfleto na rua. Custa um lanche por mês pra estar no celular da cidade inteira.&quot;
-                  </p> */}
-
-                  <ul className="text-md text-blue-800 font-medium leading-tight list-disc gap-5">
+                <div className="p-5 rounded-2xl mb-8 bg-blue-50/50 border border-blue-100">
+                  <ul className="text-md text-blue-800 font-medium leading-tight list-disc gap-5 ml-4">
                     <li>Mais barato que rodar panfleto na rua.</li>
-                    <li>Custa um lanche por mês pra estar no celular da cidade inteira.</li>
+                    <li>Sua vitrine no bolso de quem mora perto.</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/5585991105577" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-text-main text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg active:scale-95">
+                <a href="https://wa.me/5585991105577?text=Olá! Quero conhecer a Vitrine Digital e começar meus 7 dias grátis." target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-text-main text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg active:scale-95">
                   Assinar Vitrine
                 </a>
               </div>
@@ -249,9 +252,12 @@ export default function Home() {
                 <div className="absolute top-6 right-6 bg-white text-primary px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest shadow-lg">
                   Popular
                 </div>
-                <div className="mb-1 md:mb-2 relative z-10">
+                <div className="absolute top-4 left-4 bg-white/20 backdrop-blur-md text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10 border border-white/20">
+                  7 DIAS GRÁTIS
+                </div>
+                <div className="mb-1 md:mb-2 mt-4 relative z-10">
                   <h3 className="text-xl md:text-2xl font-heading font-bold mb-2 md:mb-3">Empreendedor</h3>
-                  <p className="text-white/80 text-sm font-bold h-10">Para pequenos comércios e docerias caseiras</p>
+                  <p className="text-white/80 text-sm font-bold h-10">Pra quem vende de verdade — comércios e docerias</p>
                 </div>
                 <div className="mb-8 relative z-10">
                   <div className="flex items-baseline gap-1">
@@ -261,30 +267,29 @@ export default function Home() {
                   </div>
                 </div>
                 <ul className="space-y-5 mb-10 flex-grow relative z-10">
-                  <PlanFeature text="Perfil da Loja no App" inverted />
-                  <PlanFeature text="Cadastro de até 50 produtos simples" inverted />
-                  <PlanFeature text="Pedidos no WhatsApp + notificação" inverted />
-                  <PlanFeature text="Chave Pix visível para o cliente" inverted />
+                  <PlanFeature text="Loja Completa com Catálogo" inverted />
+                  <PlanFeature text="Até 50 produtos cadastrados" inverted />
+                  <PlanFeature text="Pedidos e Notificações no App" inverted />
+                  <PlanFeature text="1 perfil de serviços incluso" inverted />
                 </ul>
-                <div className="p-5 rounded-2xl mb-8 relative z-10">
-                  {/* <p className="text-xs text-white font-bold leading-relaxed">
-                    &quot;R$ 1,60 por dia para você ter seu catálogo profissional e parar de mandar foto desfocada no zap.&quot;
-                  </p> */}
-
-                  <ul className="text-md text-white font-medium leading-tight list-disc gap-5">
-                    <li>R$ 1,60 por dia para você ter seu catálogo profissional e parar de mandar foto desfocada no zap.</li>
+                <div className="p-5 rounded-2xl mb-8 relative z-10 bg-white/10 border border-white/20">
+                  <ul className="text-md text-white font-medium leading-tight list-disc gap-5 ml-4">
+                    <li>R$ 2,60 por dia para ter seu catálogo profissional e pedidos organizados.</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/5585991105577" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-white text-primary font-bold py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl active:scale-95 relative z-10">
-                  Assinar Agora
+                <a href="https://wa.me/5585991105577?text=Olá! Quero turbinar minha loja com o Plano Empreendedor. Gostaria de iniciar meu teste de 7 dias." target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-white text-primary font-bold py-4 rounded-2xl hover:bg-gray-50 transition-all shadow-xl active:scale-95 relative z-10">
+                  Começar Teste Grátis
                 </a>
               </div>
 
               {/* Plano Delivery PRO */}
-              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group">
-                <div className="mb-6 md:mb-8">
+              <div className="bg-white rounded-2xl md:rounded-[2.5rem] p-6 md:p-10 shadow-xl shadow-gray-200/50 border border-gray-100 flex flex-col hover:shadow-2xl transition-all duration-500 hover:-translate-y-2 group relative overflow-hidden">
+                <div className="absolute top-4 left-4 bg-primary text-white px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-widest z-10">
+                  7 DIAS GRÁTIS
+                </div>
+                <div className="mb-6 md:mb-8 mt-4">
                   <h3 className="text-xl md:text-2xl font-heading font-bold text-text-main mb-2 md:mb-3">Delivery PRO</h3>
-                  <p className="text-sm text-text-muted font-bold h-10">Para Restaurantes e Comércios Estabelecidos</p>
+                  <p className="text-sm text-text-muted font-bold h-10">Para Restaurantes e Comércios de alto volume</p>
                 </div>
                 <div className="mb-8">
                   <div className="flex items-baseline gap-1">
@@ -294,25 +299,20 @@ export default function Home() {
                   </div>
                 </div>
                 <ul className="space-y-5 mb-2 flex-grow">
-                  <PlanFeature text="Produtos ILIMITADOS" />
-                  <PlanFeature text="Personalização de Categorias" />
-                  <PlanFeature text="Cupons de Desconto para fidelizar" />
-                  <PlanFeature text="Gestão completa no App/Painel" />
-                  <PlanFeature text="Controle de taxa de entrega" />
+                  <PlanFeature text="Produtos e Categorias ILIMITADAS" />
+                  <PlanFeature text="Cupons de Desconto e Promoções" />
+                  <PlanFeature text="Gestão completa no Painel Web" />
+                  <PlanFeature text="Taxa de entrega por Bairro ou KM" />
+                  <PlanFeature text="Até 3 perfis de serviços inclusos" />
                 </ul>
-                <div className="p-5 rounded-2xl mb-8 ">
-                  {/* <p className="text-xs text-red-800 font-bold leading-relaxed">
-                    &quot;No iFood você paga 15%. Aqui você paga SÓ R$ 129,90 PARA SEMPRE. Todo o lucro é seu!&quot;
-                  </p> */}
-
-                  <ul className="text-md text-red-800 font-medium leading-tight list-disc gap-5">
-                    <li>No iFood você paga 15%.</li>
-                    <li>Aqui você paga SÓ R$ 129,90 PARA SEMPRE.</li>
-                    <li>Todo o lucro é seu!</li>
+                <div className="p-5 rounded-2xl mb-8 bg-red-50/50 border border-red-100">
+                  <ul className="text-md text-red-800 font-medium leading-tight list-disc gap-5 ml-4">
+                    <li>No iFood você paga ~15% por pedido.</li>
+                    <li>Aqui o lucro é 100% seu.</li>
                   </ul>
                 </div>
-                <a href="https://wa.me/5585991105577" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-text-main text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg active:scale-95">
-                  Assinar PRO
+                <a href="https://wa.me/5585991105577?text=Olá! Quero o Plano Delivery PRO para meu restaurante. Pode liberar meus 7 dias de teste?" target="_blank" rel="noopener noreferrer" className="w-full block text-center bg-text-main text-white font-bold py-4 rounded-2xl hover:bg-black transition-all shadow-lg active:scale-95">
+                  Assinar Delivery PRO
                 </a>
               </div>
             </div>
@@ -465,7 +465,7 @@ function FeatureCard({ icon, title, description, color }: { icon: React.ReactNod
   );
 }
 
-function PlanFeature({ text, inverted = false }: { text: string, inverted?: boolean }) {
+function PlanFeature({ text, inverted = false }: { text: string | React.ReactNode, inverted?: boolean }) {
   return (
     <li className="flex items-center gap-3 align-center">
       <div className={`mt-1 flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${inverted ? 'bg-white/20' : 'bg-green-100'}`}>
