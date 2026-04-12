@@ -439,6 +439,7 @@ export default function Home() {
               <Link href="#" className="hover:text-primary transition-colors">Termos</Link>
               <Link href="#" className="hover:text-primary transition-colors">Privacidade</Link>
               <Link href="#" className="hover:text-primary transition-colors">Contato</Link>
+              <Link href="/excluir-conta" className="hover:text-[#FF6B6B] transition-colors">Excluir Conta</Link>
             </div>
 
           </div>
